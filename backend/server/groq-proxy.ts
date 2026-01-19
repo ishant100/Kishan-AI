@@ -2,13 +2,27 @@
 import "dotenv/config";
 import express, { Request, Response } from "express";
 import cors from "cors";
+import connectDB from "../config/db";
+import authRoutes from "../routes/auth";
+
 
 // If Node < 18, uncomment these 2 lines and run: npm i node-fetch@3
 // // @ts-ignore
 // import fetch from "node-fetch";
+connectDB();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin:[
+    "http://localhost:5173",
+    "http://localhost:8080"
+  ],
+  credentials:true,
+}));
+app.use(express.json());
+app.use("/api/auth", authRoutes);
+
+
 app.use(express.json({ limit: "5mb" }));
 
 // -------------------------------
@@ -30,6 +44,7 @@ type QueryInput = {
 };
 
 app.post("/api/ai", async (req: Request, res: Response) => {
+  
   try {
     console.log("[/api/ai] incoming", { hasKey: !!process.env.GROQ_API_KEY });
 
@@ -173,7 +188,11 @@ app.get("/api/prices", async (req: Request, res: Response) => {
 // -------------------------------
 // Start server
 // -------------------------------
-const port = Number(process.env.PORT || 8787);
+const port = Number(process.env.PORT || 8787||8080);
 app.listen(port, () => {
   console.log(`[groq-proxy] listening on http://localhost:${port}`);
 });
+
+
+
+

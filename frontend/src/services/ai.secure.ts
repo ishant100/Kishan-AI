@@ -6,9 +6,15 @@ const API_BASE = import.meta.env.VITE_API_BASE || "/api";
 
 export async function getAIResponse(input: QueryInput): Promise<AIResult> {
   try {
+    const token = localStorage.getItem("token");
+    const headers: HeadersInit = { "Content-Type": "application/json" };
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     const r = await fetch(`${API_BASE}/ai`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify(input),
     });
 

@@ -22,7 +22,7 @@ export const Footer = () => (
       <div>
         <h3 className="font-semibold text-lg mb-3">Contact</h3>
         <p className="flex items-center gap-2 text-sm mb-2">
-          <Phone className="w-4 h-4" /> +91 98765 43210
+          <Phone className="w-4 h-4" /> +91 93011xxxxx
         </p>
         <p className="flex items-center gap-2 text-sm mb-2">
           <Mail className="w-4 h-4" /> support@BHARTI-kisan ai.com
